@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Julian_He_P0
+namespace Customer_Activity
 {
     class Program
     {
@@ -9,6 +9,4 @@ namespace Julian_He_P0
             Console.WriteLine("Hello World!");
         }
     }
-
-    
 }

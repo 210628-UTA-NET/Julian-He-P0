@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Julian-He-P0.csproj": {}
+    "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Customer Activity\\Customer Activity.csproj": {}
   },
   "projects": {
-    "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Julian-He-P0.csproj": {
+    "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Customer Activity\\Customer Activity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Julian-He-P0.csproj",
-        "projectName": "Julian-He-P0",
-        "projectPath": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Julian-He-P0.csproj",
+        "projectUniqueName": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Customer Activity\\Customer Activity.csproj",
+        "projectName": "Customer Activity",
+        "projectPath": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Customer Activity\\Customer Activity.csproj",
         "packagesPath": "C:\\Users\\julia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\obj\\",
+        "outputPath": "C:\\Users\\julia\\Documents\\Revature Training\\Julian-He-P0\\Customer Activity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
