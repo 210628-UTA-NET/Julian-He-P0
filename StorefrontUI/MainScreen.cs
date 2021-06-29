@@ -20,7 +20,7 @@ namespace StorefrontUI{
             newCustomer.Address= input;
             Console.WriteLine("What is the Customer's Contact Info (Email or Phone Number)?");
             input = Console.ReadLine();
-            Console.WriteLine("What is the Order History");
+            
         }
 }
 }
