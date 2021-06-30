@@ -9,8 +9,6 @@ namespace StorefrontModels
         private string _address;
         private List<T> _orders = new List<T>();
         private string _emailPhone;
-        public void Customer(String[] args){  
-        }
         public Customer(){
 
         }

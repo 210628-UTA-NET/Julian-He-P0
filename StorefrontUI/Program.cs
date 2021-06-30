@@ -7,15 +7,21 @@ namespace StorefrontUI
     {   
         static void Main(string[] args)
         {
-            List<Customer> CustomerList = new List<Customer>();
-            Bool repeat = true;
+            ISelectionPage storePage = new MainPage();
+            PageType currentPage = PageType.MainPage;
+            bool repeat = true;
             while (repeat){
-                Console.Clear;
-                Console.WriteLine("Welcome to the Store, what would you like to do?");
-                Console.WriteLine("[1] Go to Customer Menu");
-                string userInput = Console.ReadLine();
-                switch(userInput){
-                    case "1": return "CustomerMenu";
+                Console.Clear();
+                storePage.Page();
+                currentPage = storePage.Selection();
+                switch(currentPage){
+                    case PageType.CustomerPage:
+                        storePage= new CustomerPage();
+                        break;
+                    case PageType.StorePage:
+                        storePage= new StorePage();
+                        break;
+                }
                 }
             }
         }
