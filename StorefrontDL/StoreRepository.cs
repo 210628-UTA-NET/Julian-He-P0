@@ -15,16 +15,10 @@ namespace StorefrontDL
 
         public Storefront AddStore(Storefront store)
         {
-            try{
-                _jsonString = File.ReadAllText(_filePath);
-            }
-            catch{
-                throw new Exception("File Path is Invalid");
-            }
-            List<Storefront> storelist = JsonSerializer.Deserialize<List<Storefront>>(_jsonString);
+            List<Storefront> storelist = this.GetAllStores();
             storelist.Add(store);
-            String jsonserialized = JsonSerializer.Serialize(storelist);
-            string filename = "Storefront.json" 
+            String jsonserialized = JsonSerializer.Serialize(storelist, new JsonSerializerOptions{WriteIndented=true});
+            string filename = "Storefront.json";
             File.WriteAllText(filename, jsonserialized);
             return store; 
         }
@@ -46,7 +40,17 @@ namespace StorefrontDL
 
         public Storefront GetStorefront(Storefront store)
         {
-            throw new NotImplementedException();
+            string storename = store.Name;
+            string storeaddress = store.Address;
+            List<Storefront> storelist = this.GetAllStores();
+            Storefront found = null;
+            foreach (Storefront storefront in storelist){
+                if(storename == storefront.Name && storeaddress == storefront.Address){
+                    found= storefront;
+                    break;
+                }
+            }
+            return found;
         }
     }
 }

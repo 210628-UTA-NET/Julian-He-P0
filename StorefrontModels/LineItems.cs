@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace StorefrontModels
 {
-    public class LineItems{
-
-        public LineItems(){
+    public class LineItem{
+        private int _quantity;
+        private string _productName;
+        public LineItem(){
 
         }
     }

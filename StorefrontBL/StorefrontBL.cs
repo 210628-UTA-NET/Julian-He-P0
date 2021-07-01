@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using StorefrontDL;
 using StorefrontModels;
 
-namespace RRBL
+namespace StorefrontBL
 {
-    public class RestaurantBL : IStorefrontBL
+    public class StorefrontBL : IStorefrontBL
     {
         /// <summary>
         /// We are defining the dependenices this class needs in the constructor
@@ -13,11 +13,11 @@ namespace RRBL
         /// (change from file system into database stored in the cloud)
         /// </summary>
         private IStoreRepository _repo;
-        public RestaurantBL(IStoreRepository p_repo)
+        public StorefrontBL(IStoreRepository p_repo)
         {
             _repo = p_repo;
         }
-        public List<Storefront> GetAllStores()
+        public List<Storefront> GetAllStorefront()
         {
             return _repo.GetAllStores();
         }

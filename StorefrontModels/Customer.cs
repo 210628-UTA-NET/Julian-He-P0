@@ -7,7 +7,7 @@ namespace StorefrontModels
     {
         private string _name;
         private string _address;
-        private List<T> _orders = new List<T>();
+        private List<Order> _orders = new List<Order>();
         private string _emailPhone;
         public Customer(){
 
@@ -24,18 +24,15 @@ namespace StorefrontModels
         }
         public string Address { 
             get{
-                return _Address;
+                return _address;
             } 
             set{
                 _address=value;
             }
              }
-        public List<T> Orders { 
+        public List<Order> Orders { 
             get{
                 return _orders;
-            } 
-            set{
-                _orders.Add(value);
             } 
         }
         public string EmailPhone { get

@@ -1,5 +1,4 @@
 ﻿using System;
-using StorefrontModels;
 
 namespace StorefrontUI
 {
@@ -22,10 +21,8 @@ namespace StorefrontUI
                         storePage= new StorePage();
                         break;
                 }
-                }
             }
         }
     }
-
-
 }
+

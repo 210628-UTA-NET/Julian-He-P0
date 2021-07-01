@@ -1,4 +1,5 @@
 using System;
+using StorefrontDL;
 
 namespace StorefrontUI{
     
@@ -6,7 +7,7 @@ namespace StorefrontUI{
 
         public PageType Selection()
                    {
-            Console.WriteLine("would you like to make a customer or see all customers?");
+            Console.WriteLine("What would you like to do??");
             Console.WriteLine(" [1] Make a new customer");
             Console.WriteLine(" [2] See all customers");
             String UserInput = Console.ReadLine();
@@ -34,9 +35,7 @@ namespace StorefrontUI{
 
                     }
                 case "2":
-                    for(int i = 0; i <= customerList.Count;i++ ){
-                        Console.WriteLine(customerList[i]);
-                    }
+                    return 
             }
         }
 
