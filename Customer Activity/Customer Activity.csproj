@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\StorefrontModels\StorefrontModels.csproj" />
+    <ProjectReference Include="..\StorefrontModels\StorefrontModels.csproj"/>
   </ItemGroup>
 
   <PropertyGroup>
@@ -9,5 +8,4 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Customer_Activity</RootNamespace>
   </PropertyGroup>
-
 </Project>

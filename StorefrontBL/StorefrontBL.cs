@@ -5,7 +5,7 @@ using StorefrontModels;
 
 namespace StorefrontBL
 {
-    public class StorefrontBL : IStorefrontBL
+    public class StoreBL : IStoreBL
     {
         /// <summary>
         /// We are defining the dependenices this class needs in the constructor
@@ -13,13 +13,20 @@ namespace StorefrontBL
         /// (change from file system into database stored in the cloud)
         /// </summary>
         private IStoreRepository _repo;
-        public StorefrontBL(IStoreRepository p_repo)
+        public StoreBL(IStoreRepository p_repo)
         {
             _repo = p_repo;
         }
-        public List<Storefront> GetAllStorefront()
+
+        public Storefront AddStore(Storefront p_store)
+        {
+            return _repo.AddStore(p_store);
+        }
+
+        public List<Storefront> GetAllStore()
         {
             return _repo.GetAllStores();
         }
+
     }
 }

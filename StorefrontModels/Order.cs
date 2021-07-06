@@ -6,10 +6,18 @@ namespace StorefrontModels
     public class Order{
         private List<LineItem> _items;
         private string _location;
-        private double totalPrice;
+        private double _totalPrice;
         public Order(){}
-        public double TotalPrice { get; set; }
-        public string Location { get; set; }
+        public double TotalPrice { get{
+            return  _totalPrice;
+        } set{
+            _totalPrice = value;
+        } }
+        public string Location { get{
+            return _location;
+        } set{
+            _location = value;
+        } }
         public List<LineItem> Items {get{
             return _items;
         } set{

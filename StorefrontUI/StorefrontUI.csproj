@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StorefrontDL\StorefrontDL.csproj" />
+    <ProjectReference Include="..\StorefrontBL\StorefrontBL.csproj" />
+    <ProjectReference Include="StorefrontUI.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

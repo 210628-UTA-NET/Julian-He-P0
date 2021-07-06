@@ -38,5 +38,11 @@ namespace StorefrontModels
                  _inventory = value;
              }
         }
+        public List<Order> Orders { get{
+            return _orders;
+        } set{
+            _orders= value;
+        } }
+
     }
 }

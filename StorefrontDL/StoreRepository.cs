@@ -8,7 +8,7 @@ using StorefrontModels;
 
 namespace StorefrontDL
 {
-    public class Repository : IStoreRepository
+    public class StoreRepository : IStoreRepository
     {
         private const string _filePath = "./../StorefrontDL/Database/Storefront.json";
         private string _jsonString;

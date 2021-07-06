@@ -33,6 +33,9 @@ namespace StorefrontModels
         public List<Order> Orders { 
             get{
                 return _orders;
+            }
+            set{
+                _orders = value;
             } 
         }
         public string EmailPhone { get
