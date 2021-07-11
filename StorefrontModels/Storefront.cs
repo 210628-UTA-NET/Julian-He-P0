@@ -34,13 +34,13 @@ namespace StorefrontModels
                  return _inventory;
                  }
              
-             set{
+             private set{
                  _inventory = value;
              }
         }
         public List<Order> Orders { get{
             return _orders;
-        } set{
+        } private set{
             _orders= value;
         } }
 

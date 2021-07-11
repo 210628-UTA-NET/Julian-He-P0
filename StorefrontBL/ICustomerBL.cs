@@ -10,10 +10,7 @@ namespace StorefrontBL{
         
         List<Customer> GetAllCustomers();
 
-        Customer GetCustomer();
-
-        Customer ADDCustomer();
-
+        Customer AddCustomer(Customer customer);
 
     }
 }

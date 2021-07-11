@@ -1,24 +1,26 @@
 using System.Collections.Generic;
 using StorefrontModels;
+using StorefrontDL;
 
 namespace StorefrontBL{
 
     public class CustomerBL : ICustomerBL
     {
-        public Customer ADDCustomer()
+        ICustomerRepository _repo;
+        public CustomerBL(ICustomerRepository p_repo){
+            _repo = p_repo;
+        }
+        
+        public Customer AddCustomer(Customer customer)
         {
-            throw new System.NotImplementedException();
+           return _repo.AddCustomer(customer);
         }
 
         public List<Customer> GetAllCustomers()
         {
-            throw new System.NotImplementedException();
+            return _repo.GetAllCustomers();
         }
 
-        public Customer GetCustomer()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 
 

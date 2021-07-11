@@ -18,5 +18,7 @@ namespace StorefrontBL
         List<Storefront> GetAllStore();
 
         Storefront AddStore(Storefront p_store);
+
+        Storefront GetStorefront(Storefront p_store);
     }
 }

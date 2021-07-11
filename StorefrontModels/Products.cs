@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace StorefrontModels{
     public class Product{
@@ -15,6 +16,10 @@ namespace StorefrontModels{
             return _name;
             } 
             set{
+
+            if (!Regex.IsMatch(value, @"^[A-Za-z .]+$")){
+                throw new Exception("Products cannot have numbers");
+            }
             _name = value;
             } 
         }
@@ -24,6 +29,9 @@ namespace StorefrontModels{
                 return _price;
             }
             set{
+                if (value < 0){
+                    throw new ArithmeticException("Value cannot be negative");
+                }
                 _price=value;
             }
         }

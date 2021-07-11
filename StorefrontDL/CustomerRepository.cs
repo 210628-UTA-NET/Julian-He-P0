@@ -5,7 +5,7 @@ using System.Text.Json;
 using StorefrontModels;
 namespace StorefrontDL{
     public class CustomerRepository : ICustomerRepository{
-        private const string _filePath = "./../customerfrontDL/Database/Customer.json";
+        private const string _filePath = "./../StorefrontDL/Database/Customer.json";
         private string _jsonString;
 
         public Customer AddCustomer(Customer customer)

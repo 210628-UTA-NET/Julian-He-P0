@@ -8,9 +8,11 @@ namespace StorefrontModels
         private string _name;
         private string _address;
         private List<Order> _orders = new List<Order>();
-        private string _emailPhone;
+        private Dictionary<string, string> _emailPhone = new Dictionary<string, string>();
+        
         public Customer(){
-
+            _emailPhone["Email"] = null;
+            _emailPhone["Phone"] = null;
         }
         public string Name { 
             get
@@ -34,15 +36,31 @@ namespace StorefrontModels
             get{
                 return _orders;
             }
-            set{
+             private set{
                 _orders = value;
             } 
         }
-        public string EmailPhone { get
-        {return _emailPhone;} 
-        set{
-            _emailPhone = value;
-        } 
+        public string EmailPhoneGet(string param){
+            if (param == "Email"){
+                
+                return _emailPhone["Email"];
+            }
+            else if (param == "Phone"){
+                return _emailPhone["Phone"];
+            }
+            else{
+                throw new ArgumentException("Invalid Parameter");
+            }
         }
+
+        public void EmailPhoneSet(string param, string value){
+            if (param == "Email"){
+                _emailPhone["Email"] = value;
+            }
+            if (param == "Phone"){
+                _emailPhone["Phone"] = value;
+            }
+        } 
     }
 }
+

@@ -1,5 +1,4 @@
 ﻿using System;
-using StorefrontUI;
 
 namespace StorefrontUI
 {
@@ -10,16 +9,41 @@ namespace StorefrontUI
             ISelectionPage storePage = new MainPage();
             PageType currentPage = PageType.MainPage;
             bool repeat = true;
+            IPageFactory pageFactory = new PageFactory();
             while (repeat){
                 Console.Clear();
                 storePage.Page();
                 currentPage = storePage.Selection();
                 switch(currentPage){
+                    case PageType.MainPage:
+                        storePage=pageFactory.GetMenu(PageType.MainPage);
+                        break;
+                    case PageType.AddStorefrontPage:
+                        storePage= pageFactory.GetMenu(PageType.AddStorefrontPage);
+                        break;
+                    case PageType.ShowCustomerPage:
+                        storePage= pageFactory.GetMenu(PageType.ShowCustomerPage);
+                        break;
+                    case PageType.FindStorePage:
+                        storePage= pageFactory.GetMenu(PageType.FindStorePage);
+                        break;
+                    case PageType.AddCustomerPage:
+                        storePage = pageFactory.GetMenu(PageType.AddCustomerPage);
+                        break;
                     case PageType.CustomerPage:
-                        storePage= new CustomerPage();
+                        storePage= pageFactory.GetMenu(PageType.CustomerPage);
                         break;
                     case PageType.StorePage:
-                        storePage= new StorePage();
+                        storePage= pageFactory.GetMenu(PageType.StorePage);
+                        break;
+                    case PageType.ReplenishInventory:
+                        storePage = pageFactory.GetMenu(PageType.ReplenishInventory);
+                        break;
+                    case PageType.Exit:
+                        repeat = false;
+                        break;
+                    default:
+                        Console.WriteLine("Input not found, please try again. ");
                         break;
                 }
             }

@@ -8,7 +8,10 @@ namespace StorefrontUI{
             {
                 string userInput = Console.ReadLine();
                 switch(userInput){
-                    case "4": 
+                    case "1": return PageType.FindStorePage;
+                    case "2": return PageType.AddStorefrontPage;
+
+                    case "3": 
                         return PageType.MainPage;
                     default:
                         Console.WriteLine("Option not found, please press enter to try agian");
@@ -23,8 +26,7 @@ namespace StorefrontUI{
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("[1] Find a Store");
             Console.WriteLine("[2] Add a Store");
-            Console.WriteLine("[3] Place an Order");
-            Console.WriteLine("[4] Return to the main menu");
+            Console.WriteLine("[3] Return to the main menu");
         }
     }
 }

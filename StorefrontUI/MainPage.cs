@@ -4,7 +4,7 @@ namespace StorefrontUI{
     {
         public void Page()
         {
-            Console.WriteLine("Welcome to the Storefront");
+            Console.WriteLine("Welcome to the Storefront App");
             Console.WriteLine("Which page would you like to go?");
             Console.WriteLine("[1] Customer Page");
             Console.WriteLine("[2] Store Page");

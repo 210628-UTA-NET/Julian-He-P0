@@ -27,6 +27,9 @@ namespace StorefrontBL
         {
             return _repo.GetAllStores();
         }
+        public Storefront GetStorefront(Storefront p_store){
+            return _repo.GetStorefront(p_store);
+        }
 
     }
 }

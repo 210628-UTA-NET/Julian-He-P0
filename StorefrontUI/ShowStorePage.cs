@@ -16,15 +16,15 @@ namespace StorefrontUI
         {
             Console.WriteLine("List of Storefronts");
 
-            List<Storefront> restaurants = _storeBL.GetAllStore();
+            List<Storefront> stores = _storeBL.GetAllStore();
 
-            foreach (Storefront store in restaurants)
+            foreach (Storefront store in stores)
             {
                 Console.WriteLine("=============================");
                 Console.WriteLine(store);
                 Console.WriteLine("=============================");
             }
-
+            Console.WriteLine("[1] Find a store");
             Console.WriteLine("[0] Go Back");
         }
 
@@ -36,6 +36,8 @@ namespace StorefrontUI
             {
                 case "0":
                     return PageType.StorePage;
+                case "1":
+                    return PageType.FindStorePage;
                 default:
                     Console.WriteLine("Input was not correct");
                     Console.WriteLine("Press Enter to continue");
