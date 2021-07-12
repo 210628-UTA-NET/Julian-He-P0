@@ -9,6 +9,7 @@ namespace StorefrontModels
         private string _address;
         private List<LineItem> _inventory;
         private List<Order> _orders;
+        private int _id;
 
         public Storefront(){
            
@@ -43,6 +44,15 @@ namespace StorefrontModels
         } private set{
             _orders= value;
         } }
+
+        public int ID{
+            get{
+                return _id;
+            }
+            set{
+                _id = value;
+            }
+        }
 
     }
 }

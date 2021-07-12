@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace StorefrontModels{
     public class Product{
+        private int _id;
         private string _name;
         private double _price;
         private string _desc = "No description found";
@@ -51,6 +52,7 @@ namespace StorefrontModels{
                 _category = value;
             }
         }
+        public int ID { get{return _id;} set{_id = value;} }
 
     }
 }

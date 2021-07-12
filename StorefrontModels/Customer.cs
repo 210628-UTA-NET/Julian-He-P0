@@ -9,6 +9,7 @@ namespace StorefrontModels
         private string _address;
         private List<Order> _orders = new List<Order>();
         private Dictionary<string, string> _emailPhone = new Dictionary<string, string>();
+        private int _customerID;
         
         public Customer(){
             _emailPhone["Email"] = null;
@@ -60,7 +61,14 @@ namespace StorefrontModels
             if (param == "Phone"){
                 _emailPhone["Phone"] = value;
             }
-        } 
+        }
+        public int ID{
+            get{return _customerID;}
+            set{_customerID = value;}
+        }
+
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using StorefrontBL;
 using StorefrontModels;
 using System.Threading;
+using StorefrontDL;
 
 
 namespace StorefrontUI
@@ -11,21 +12,23 @@ namespace StorefrontUI
     {
         private static Customer _newCustomer = new Customer();
         private ICustomerBL _customerBL;
-        public AddCustomerPage(ICustomerBL p_store)
+        public AddCustomerPage(ICustomerBL p_customer)
         {
-            _customerBL = p_store;
+            _customerBL = p_customer;
         }
         public void Page()
         {
-            Console.WriteLine("Add a Customer");
+                Console.WriteLine("Add a Customer");
                 Console.WriteLine("What would you like to do?");
 
-                Console.WriteLine("[5] Add Customer Name: " + _newCustomer.Name);
-                Console.WriteLine("[4] Add Customer Address: " + _newCustomer.Address);
-                Console.WriteLine("[3] Add Customer Email: "+_newCustomer.EmailPhoneGet("Email"));
-                Console.WriteLine("[2] Add Customer Phone: " + _newCustomer.EmailPhoneGet("Phone"));
-                Console.WriteLine("[1] Add Customer Orders");
+                Console.WriteLine("[6] Add Customer Name: " + _newCustomer.Name);
+                Console.WriteLine("[5] Add Customer Address: " + _newCustomer.Address);
+                Console.WriteLine("[4] Add Customer Email: "+_newCustomer.EmailPhoneGet("Email"));
+                Console.WriteLine("[3] Add Customer Phone: " + _newCustomer.EmailPhoneGet("Phone"));
+                Console.WriteLine("[2] Add Customer Orders");
+                Console.WriteLine("[1] Add Customer");
                 Console.WriteLine("[0] Go Back");
+                _newCustomer.ID = _customerBL.GetAllCustomers().Count + 1;
 
         }
 
@@ -38,20 +41,20 @@ namespace StorefrontUI
             {
                 case "0":
                     return PageType.CustomerPage;
-                case "5":
+                case "6":
                     Console.WriteLine("What is the name of the Customer?");
                     _newCustomer.Name = Console.ReadLine();
                     return PageType.AddCustomerPage;
-                case "4":
+                case "5":
                     Console.WriteLine("What is the address of the Customer?");
                     _newCustomer.Address = Console.ReadLine();
                     return PageType.AddCustomerPage;
-                case "3":
+                case "4":
                     Console.WriteLine("What is the email of the customer?");
                     string emailValue = Console.ReadLine();
                     _newCustomer.EmailPhoneSet("Email", emailValue);
                     return PageType.AddCustomerPage;
-                case "2":
+                case "3":
                     Console.WriteLine("What is the phone number of the customer?");
                     string phone = Console.ReadLine();
                     try{
@@ -62,9 +65,10 @@ namespace StorefrontUI
                     Thread.Sleep(1000);
                     }
                     return PageType.AddCustomerPage;
-                case "1":
+                case "2":
                     Console.WriteLine("What are the orders of the customer");
-                    OrderMaker ordermaker = new OrderMaker();
+                    StoreBL store = new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext()));
+                    OrderMaker ordermaker = new OrderMaker(store, _newCustomer.ID);
                     bool continue1 = true;
                     _newCustomer.Orders.Add(ordermaker.MakeOrder());
                     while(continue1){
@@ -83,6 +87,9 @@ namespace StorefrontUI
                             Console.Clear();
                         }
                     }
+                    return PageType.AddCustomerPage;
+                case "1":
+                    _customerBL.AddCustomer(_newCustomer);
                     return PageType.AddCustomerPage;
                 default: 
                     Console.WriteLine("Input was not correct");

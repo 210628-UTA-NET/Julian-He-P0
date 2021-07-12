@@ -7,6 +7,8 @@ namespace StorefrontModels
     public class LineItem{
         private int _quantity;
         private Product _product;
+        private int _orderID;
+        private int _storeID;
         public LineItem(){
         }
         public int Quantity{
@@ -30,6 +32,17 @@ namespace StorefrontModels
             set{
                 _product = value;
             }
+        }
+        public int OrderID{
+            get{return _orderID;}
+            set{_orderID = value;}
+        }
+        public int StoreID{
+            get{return _storeID;}
+            set{_storeID = value;}
+        }
+        public override string ToString(){
+            return $"Product: {ProductName}, Quantity: {Quantity}";
         }
     }
 }

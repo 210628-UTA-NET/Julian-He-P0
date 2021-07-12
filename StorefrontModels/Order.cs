@@ -5,15 +5,17 @@ namespace StorefrontModels
 {
     public class Order{
         private List<LineItem> _items;
-        private string _location;
+        private int _orderID;
+        private int _location;
         private double _totalPrice;
+        private int _customerID;
         public Order(){}
         public double TotalPrice { get{
             return  _totalPrice;
         } set{
             _totalPrice = value;
         } }
-        public string Location { get{
+        public int Location { get{
             return _location;
         } set{
             _location = value;
@@ -23,6 +25,15 @@ namespace StorefrontModels
         } set{
             _items=value;
         }}
+        public int CustomerID {
+            get{
+                return _customerID;
+            }
+            set{
+                _customerID = value;
+            }
+        }
+        public int OrderID { get{return _orderID;} set{_orderID = value;} }
     }
         
 

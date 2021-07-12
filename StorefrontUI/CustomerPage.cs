@@ -16,7 +16,7 @@ namespace StorefrontUI{
                    {
             string userInput = Console.ReadLine();
                 switch(userInput){
-                    case "1": return PageType.ShowCustomerPage;
+                    case "1": return PageType.CustomerOptions;
                     case "2": return PageType.AddCustomerPage;
 
                     case "3": 
@@ -32,7 +32,7 @@ namespace StorefrontUI{
         {
             Console.WriteLine("Welcome to the Customer Page");
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("[1] Find a Customer");
+            Console.WriteLine("[1] Go to Customer Options");
             Console.WriteLine("[2] Add a Customer");
             Console.WriteLine("[3] Return to the main menu");
         }

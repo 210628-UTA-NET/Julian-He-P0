@@ -1,11 +1,11 @@
-using System;
+/* using System;
 using StorefrontModels;
 using StorefrontBL;
 using System.Collections.Generic;
 
 namespace StorefrontUI{
 
-    public class FindStorePage : ISelectionPage{
+    public class FindStorePage {
         private IStoreBL _storeBL;
         public FindStorePage(IStoreBL p_store){
             _storeBL = p_store;
@@ -19,26 +19,28 @@ namespace StorefrontUI{
 
 
         }
+        // public Storefront StoreFinder(string option, string param){
 
-        public PageType Selection()
+        //}
+        public Storefront Selection()
         {
             String input = Console.ReadLine();
             switch(input){
                 case "1":
                     Console.WriteLine("What is the Name of the Store you wish to find?");
                     string storeName = Console.ReadLine();
-                    List<Storefront> stores  = _storeBL.GetAllStore();
-                    foreach (Storefront store in stores){
-                        if (store.Name == storeName){
-                            StoreOptions storechoice = new StoreOptions(store);
-                            
-                        }
-                        
-                    }
-                    return PageType.MainPage;
+                    Storefront store = StoreFinder("1", storeName);
+                    return store;
+                case "2":
+                    Console.WriteLine("What is the Address if the Store you wish to find?");
+                    string storeAddress = Console.ReadLine();
+                    Storefront store1 = StoreFinder("2", storeAddress);
+                    return store1;
+                case "3":
+                    return null;
                 default:
-                    return PageType.FindStorePage;
+                    return ;
             }
         }
     }
-}
+} */

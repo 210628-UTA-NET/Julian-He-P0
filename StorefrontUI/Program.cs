@@ -39,6 +39,18 @@ namespace StorefrontUI
                     case PageType.ReplenishInventory:
                         storePage = pageFactory.GetMenu(PageType.ReplenishInventory);
                         break;
+                    case PageType.StoreOptions:
+                        storePage = pageFactory.GetMenu(PageType.StoreOptions);
+                        break;
+                    case PageType.CustomerOptions:
+                        storePage = pageFactory.GetMenu(PageType.CustomerOptions);
+                        break;
+                    case PageType.CustomerViewOrders:
+                        storePage = pageFactory.GetMenu(PageType.CustomerViewOrders);
+                        break;
+                    case PageType.StoreViewOrders:
+                        storePage = pageFactory.GetMenu(PageType.StoreViewOrders);
+                        break;
                     case PageType.Exit:
                         repeat = false;
                         break;

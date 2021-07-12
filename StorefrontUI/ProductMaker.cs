@@ -48,7 +48,7 @@ namespace StorefrontUI{
                     if (storeProduct.Name == null){
                         Console.WriteLine("Name cannot be empty");
                         }
-                    if (storeProduct.Price == null){
+                    if (storeProduct.Price == 0){
                         Console.WriteLine("Price cannot be empty");
                         }
                     else{

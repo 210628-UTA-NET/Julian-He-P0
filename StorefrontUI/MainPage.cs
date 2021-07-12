@@ -8,6 +8,7 @@ namespace StorefrontUI{
             Console.WriteLine("Which page would you like to go?");
             Console.WriteLine("[1] Customer Page");
             Console.WriteLine("[2] Store Page");
+            Console.WriteLine("[3] Exit");
         }
 
         public PageType Selection()
@@ -19,6 +20,8 @@ namespace StorefrontUI{
                 
                 case "2":
                     return PageType.StorePage;
+                case "3":
+                    return PageType.Exit;
                 default:
                     Console.WriteLine("Selection not found, please try again");
                     Console.ReadLine();
