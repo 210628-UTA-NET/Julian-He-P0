@@ -2,50 +2,44 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using StorefrontModels;
+using Models = StorefrontModels;
+using Entity = StorefrontDL.Entities;
+using System.Linq;
+
 namespace StorefrontDL{
     public class CustomerRepository : ICustomerRepository{
-        private const string _filePath = "./../StorefrontDL/Database/Customer.json";
-        private string _jsonString;
-
-        public Customer AddCustomer(Customer customer)
+        private Entity.P0DBContext _context;
+        public CustomerRepository(Entity.P0DBContext p_context){
+            _context= p_context;
+        }
+        public Models.Customer AddCustomer(Models.Customer customer)
         {
-            List<Customer> customerList = this.GetAllCustomers();
-            customerList.Add(customer);
-            String jsonserialized = JsonSerializer.Serialize(customerList, new JsonSerializerOptions{WriteIndented=true});
-            string filename = "Customer.json";
-            File.WriteAllText(filename, jsonserialized);
+            _context.Customers.Add(new Entity.Customer{
+                Name = customer.Name,
+                Address = customer.Address,
+                Phone = customer.EmailPhoneGet("Phone"),
+                Email = customer.EmailPhoneGet("Email"),
+            });
+            _context.SaveChanges();
             return customer;
         }
 
-        public List<Customer> GetAllCustomers()
-                {
-            try
+        public List<Models.Customer> GetAllCustomers()
             {
-                _jsonString = File.ReadAllText(_filePath);
-            }
-            catch (System.Exception)
-            {
-                throw new Exception("File path is invalid");
-            }
-
-            //This will return a list of restaurant from the jsonString that came from 
-            return JsonSerializer.Deserialize<List<Customer>>(_jsonString);
+                return _context.Customers.Select(custom => 
+                new Models.Customer(){
+                    ID= custom.Id,
+                    Name = custom.Name,
+                    Address = custom.Address,
+                    Email = custom.Email,
+                    Phone = custom.Phone
+                }).ToList();
         }
 
-        public Customer GetCustomer(Customer customer)
+        public Models.Customer GetCustomer(Models.Customer customer)
         {
-            string customername = customer.Name;
-            string customeraddress = customer.Address;
-            List<Customer> customerlist = this.GetAllCustomers();
-            Customer found = null;
-            foreach (Customer customerentry in customerlist){
-                if(customername == customerentry.Name && customeraddress == customerentry.Address){
-                    found= customer;
-                    break;
-                }
-            }
-            return found;
+            throw new NotImplementedException();
+            
         }
     }
 }
