@@ -24,8 +24,8 @@ namespace StorefrontUI
                     return new AddStorefrontPage(storeBL, context);
                // case PageType.FindStorePage:
                     //return new FindStorePage(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
-                //case PageType.FindCustomerPage:
-                    // new FindCustomerPage(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                case PageType.FindCustomerPage:
+                    return new FindCustomerPage(customerBL);
                 case PageType.CustomerPage:
                     return new CustomerPage();
                 case PageType.ShowCustomerPage:

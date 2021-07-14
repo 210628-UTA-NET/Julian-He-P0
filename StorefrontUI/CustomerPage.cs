@@ -16,8 +16,8 @@ namespace StorefrontUI{
                 switch(userInput){
                     case "1": return PageType.CustomerOptions;
                     case "2": return PageType.AddCustomerPage;
-
-                    case "3": 
+                    case "3": return PageType.FindCustomerPage;
+                    case "4": 
                         return PageType.MainPage;
                     default:
                         Console.WriteLine("Option not found, please press enter to try agian");
@@ -32,7 +32,8 @@ namespace StorefrontUI{
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("[1] Go to Customer Options");
             Console.WriteLine("[2] Add a Customer");
-            Console.WriteLine("[3] Return to the main menu");
+            Console.WriteLine("[3] Find a Customer");
+            Console.WriteLine("[4] Return to the main menu");
         }
     }
 }

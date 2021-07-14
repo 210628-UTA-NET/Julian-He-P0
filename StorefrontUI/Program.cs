@@ -24,8 +24,8 @@ namespace StorefrontUI
                     case PageType.ShowCustomerPage:
                         storePage= pageFactory.GetMenu(PageType.ShowCustomerPage);
                         break;
-                    case PageType.FindStorePage:
-                        storePage= pageFactory.GetMenu(PageType.FindStorePage);
+                    case PageType.FindCustomerPage:
+                        storePage= pageFactory.GetMenu(PageType.FindCustomerPage);
                         break;
                     case PageType.AddCustomerPage:
                         storePage = pageFactory.GetMenu(PageType.AddCustomerPage);
