@@ -6,7 +6,10 @@ namespace StorefrontDL{
 
         ///returns all customers in repo
         List<Order> GetAllOrders();
-        Order GetOrder(Order order);
         Order AddOrder(Order order);
+        List<Order> GetStoreOrder(int ints);
+        List<Order> GetCustomerOrder(int ints);
+
+        void PlaceOrder(Order order);
     }
 }

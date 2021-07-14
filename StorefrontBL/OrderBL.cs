@@ -28,10 +28,15 @@ namespace StorefrontBL
            return _repo.GetAllOrders();
         }
 
-        public Order GetOrder(Order p_order)
+        public List<Order> GetStoreOrder(int p_order)
         {
-            return _repo.GetOrder(p_order);
+            return _repo.GetStoreOrder(p_order);
         }
-
+        public List<Order> GetCustomerOrder(int p_order){
+            return _repo.GetCustomerOrder(p_order);
+        }
+        public void PlaceOrder(Order order){
+            _repo.PlaceOrder(order);
+        }
     }
 }

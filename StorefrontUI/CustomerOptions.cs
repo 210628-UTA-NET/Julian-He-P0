@@ -8,9 +8,11 @@ namespace StorefrontUI{
     public class CustomerOptions : ISelectionPage{
         
         private ICustomerBL _customerBL;
-        public CustomerOptions(ICustomerBL p_customerBL){
+        private StorefrontDL.Entities.P0DBContext _context;
+        public CustomerOptions(ICustomerBL p_customerBL, StorefrontDL.Entities.P0DBContext context){
 
             _customerBL = p_customerBL;
+            _context = context;
         }
 
         public void Page()
@@ -41,49 +43,26 @@ namespace StorefrontUI{
                     Console.WriteLine("List of Customers");
                     List<Customer> customers = _customerBL.GetAllCustomers();
                     Customer finalcustomer = new Customer();
+                    int i = 0;
                     foreach (Customer customer in customers){
                         Console.WriteLine("============================");
-                        Console.WriteLine(customer.Name);
+                        Console.WriteLine("[{0}]" + customer.Name, i);
                         Console.WriteLine("============================");
+                        i++;
                         }
                     bool customerselected = false;    
-                    while(customerselected){
-                    Console.WriteLine("What is the name of the Customer who wishes to make an order");
-                    List<Customer> chosen = new List<Customer>();
-                    string CustomerName = Console.ReadLine();
-                    foreach(Customer customer1 in customers){
-                        if (customer1.Name == CustomerName){
-                            chosen.Add(customer1);
-                        }
-                    }
-                    if (chosen.Count >1){
-                        Console.WriteLine("Multiple people with this name found please select one");
-                        int i = 1;
-                        foreach(Customer customer in chosen){
-                            Console.WriteLine("[{0}] " + customer.Name + "with Address " + customer.Address, i);
-                        }
-                        bool validselection = false;
-                        int num = 0;
-                        while(!validselection){
-                        try{
-                        num = Convert.ToInt32(Console.ReadLine());
-                        validselection = true;
-                        }
-                        catch{
-                            Console.WriteLine("Please us whole numbers only");
-                            }
-                        }
-                        finalcustomer = chosen[num];
-                        customerselected = false;
-                    }
-                    if (chosen.Count == 0){
-                        Console.WriteLine("No customer with that name was found");
+                    while(!customerselected){
+                    Console.WriteLine("What is the number of the Customer who wishes to make an order");
+                    string num = Console.ReadLine();
+                    int CustomerNum = Convert.ToInt32(num);
+                    if (CustomerNum > customers.Count){
+                        Console.WriteLine("Customer number not found");
                     }
                     else{
-                        finalcustomer = chosen[0];
-                        }
-                    }
-                    MakeOrder PlaceOrder = new MakeOrder(finalcustomer, _customerBL, new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                        finalcustomer = customers[CustomerNum];
+                        customerselected= true;
+                    }}
+                    MakeOrder PlaceOrder = new MakeOrder(finalcustomer, _customerBL, new StoreBL(new StoreRepository(_context)));
                     PlaceOrder.Page();
                     PageType page = PlaceOrder.Selection();
                     return page;

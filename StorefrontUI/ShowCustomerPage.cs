@@ -6,7 +6,12 @@ using System.Collections.Generic;
 namespace StorefrontUI{
     public class ShowCustomerPage : ISelectionPage
     {
+        private StorefrontDL.Entities.P0DBContext _context;
         private ICustomerBL _customerBL;
+        public ShowCustomerPage(ICustomerBL p_customer, StorefrontDL.Entities.P0DBContext context){
+        _customerBL = p_customer;
+        _context = context;
+    }
         public void Page()
         {
             Console.WriteLine("List of Customers");
@@ -36,9 +41,7 @@ namespace StorefrontUI{
                     return PageType.ShowCustomerPage;
             }
         }
-        public ShowCustomerPage(ICustomerBL p_customer){
-        _customerBL = p_customer;
-    }
+
     }
     
 }

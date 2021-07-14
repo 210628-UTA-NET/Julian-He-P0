@@ -5,6 +5,7 @@ using System.Text.Json;
 using Models = StorefrontModels;
 using Entity = StorefrontDL.Entities;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace StorefrontDL{
     public class CustomerRepository : ICustomerRepository{
@@ -26,20 +27,32 @@ namespace StorefrontDL{
 
         public List<Models.Customer> GetAllCustomers()
             {
-                return _context.Customers.Select(custom => 
-                new Models.Customer(){
-                    ID= custom.Id,
-                    Name = custom.Name,
-                    Address = custom.Address,
-                    Email = custom.Email,
-                    Phone = custom.Phone
-                }).ToList();
+                var result = _context.Customers.Include(o => o.Orders).ToList();
+            List<Models.Customer> list = new List<Models.Customer>();
+
+            foreach(var res in result){
+                Models.Customer customer = new Models.Customer();
+                customer.Address = res.Address;
+                customer.ID = res.Id;
+                customer.Name = res.Name;
+                OrderRepository order = new OrderRepository(_context);
+                customer.Orders = order.GetCustomerOrder(customer.ID);
+                list.Add(customer);
+            }
+          return list;
         }
 
-        public Models.Customer GetCustomer(Models.Customer customer)
+        public Models.Customer GetCustomer(int id)
         {
-            throw new NotImplementedException();
-            
+            Models.Customer returnCustomer = new Models.Customer();
+            List<Models.Customer> customers = this.GetAllCustomers();
+            foreach(Models.Customer customer in customers){
+                if (customer.ID == id){
+                    returnCustomer = customer;
+                    return returnCustomer;
+                }
+            }
+            return returnCustomer;
         }
     }
 }

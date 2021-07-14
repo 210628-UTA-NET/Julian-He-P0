@@ -19,6 +19,10 @@ namespace StorefrontBL
 
         Order AddOrder(Order p_order);
 
-        Order GetOrder(Order p_order);
+        List<Order> GetStoreOrder(int p_order);
+
+        List<Order> GetCustomerOrder(int p_order);
+
+        void PlaceOrder(Order order);
     }
 }

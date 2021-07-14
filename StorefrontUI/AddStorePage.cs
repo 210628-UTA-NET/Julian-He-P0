@@ -10,18 +10,21 @@ namespace StorefrontUI
     public class AddStorefrontPage : ISelectionPage
     {
         private static Storefront _storefront = new Storefront();
+        private StorefrontDL.Entities.P0DBContext _context;
         private IStoreBL _storeBL;
 
-        public AddStorefrontPage(IStoreBL p_store)
+
+        public AddStorefrontPage(IStoreBL p_store, StorefrontDL.Entities.P0DBContext context)
         {
             _storeBL = p_store;
+            _context = context;
         }
         public void Page()
         {
             Console.WriteLine("Add a Storefront");
                 Console.WriteLine("What would you like to add?");
-                Console.WriteLine("[5] Store Name");
-                Console.WriteLine("[4] Store Address");
+                Console.WriteLine("[5] Store Name: " + _storefront.Name);
+                Console.WriteLine("[4] Store Address: " + _storefront.Address);
                 Console.WriteLine("[3] Store Inventory");
                 Console.WriteLine("[2] Store Orders");
                 Console.WriteLine("[1] Add Store");
@@ -41,6 +44,7 @@ namespace StorefrontUI
                     return PageType.StorePage;
                 case "1":
                     _storeBL.AddStore(_storefront);
+                    Console.WriteLine("Store Added");
                     return PageType.AddStorefrontPage;
                 case "2":
                     Console.WriteLine("Which customer made this order?");
@@ -71,7 +75,7 @@ namespace StorefrontUI
                     }
                     return PageType.AddStorefrontPage;
                 case "3":
-                    ProductMaker productmaker = new ProductMaker();
+                    ProductMaker productmaker = new ProductMaker(_context);
                     bool inventory = true;
                     HashSet<LineItem> StoreInventory = new HashSet<LineItem>();
                     while (inventory){
@@ -85,6 +89,7 @@ namespace StorefrontUI
                     return PageType.AddStorefrontPage;
                         
                 case "4":
+                    Console.WriteLine("What is the address of the store");
                     _storefront.Address = Console.ReadLine();
                     return PageType.AddStorefrontPage;
                 case "5":

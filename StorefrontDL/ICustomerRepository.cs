@@ -6,7 +6,7 @@ namespace StorefrontDL{
 
         ///returns all customers in repo
         List<Customer> GetAllCustomers();
-        Customer GetCustomer(Customer customer);
+        Customer GetCustomer(int customer);
         Customer AddCustomer(Customer customer);
     }
 }

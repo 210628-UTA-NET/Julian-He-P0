@@ -12,9 +12,11 @@ namespace StorefrontUI
     {
         private static Customer _newCustomer = new Customer();
         private ICustomerBL _customerBL;
-        public AddCustomerPage(ICustomerBL p_customer)
+        private StorefrontDL.Entities.P0DBContext _context;
+        public AddCustomerPage( StorefrontDL.Entities.P0DBContext context)
         {
-            _customerBL = p_customer;
+            _customerBL = new CustomerBL(new CustomerRepository(context));
+            _context = context;
         }
         public void Page()
         {
@@ -67,8 +69,8 @@ namespace StorefrontUI
                     return PageType.AddCustomerPage;
                 case "2":
                     Console.WriteLine("What are the orders of the customer");
-                    StoreBL store = new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext()));
-                    OrderMaker ordermaker = new OrderMaker(store, _newCustomer.ID);
+                    StoreBL store = new StoreBL(new StoreRepository(_context));
+                    OrderMaker ordermaker = new OrderMaker(store, _newCustomer.ID, _context);
                     bool continue1 = true;
                     _newCustomer.Orders.Add(ordermaker.MakeOrder());
                     while(continue1){

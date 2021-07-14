@@ -1,8 +1,6 @@
 using Models = StorefrontModels;
 using System.Collections.Generic;
-using System;
-using System.IO;
-using System.Text.Json;
+using System.Linq;
 using Entity = StorefrontDL.Entities;
 namespace StorefrontDL{
     public class ProductRepository : IProductRepository
@@ -16,30 +14,34 @@ namespace StorefrontDL{
         {
             _context.Products.Add(new Entity.Product{
                 Name = product.Name,
-                Price = product.Price
+                Price = product.Price,
+                Category = product.Category,
+                Description = product.Desc
             });
+            _context.SaveChanges();
             return product;
 
         }
 
         public List<Models.Product> GetAllProducts()
         {
-            throw new NotImplementedException();
+            return _context.Products.Select(prod => new Models.Product(){
+                                                Name = prod.Name,
+                                                Price = (double) prod.Price,
+                                                ID = prod.Id,
+                                                Category = prod.Category,
+                                                Desc = prod.Description
+            }).ToList();
         }
 
         public Models.Product GetProduct(Models.Product product)
         {
-            string ProductName = product.Name;
-            double ProductPrice = product.Price;
-            List<Models.Product> productlist = this.GetAllProducts();
-            Models.Product found = null;
-            foreach (Models.Product product1 in productlist){
-                if(ProductName == product1.Name && ProductPrice == product1.Price){
-                    found= product1;
-                    break;
-                }
-            }
-            return found;
+            List<Models.Product> prods = this.GetAllProducts();
+            var queryRes = (from res in prods
+                                    where res.ID == product.ID
+                                    select res);
+            List<Models.Product> found = new List<Models.Product>();
+            return found[0];
         }
     }
 }

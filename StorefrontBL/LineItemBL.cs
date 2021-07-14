@@ -22,14 +22,18 @@ namespace StorefrontBL{
             return _repo.GetAllLineItems();
         }
 
-        public LineItem GetLineItem(LineItem p_lineitem)
+        public List<LineItem> GetLineItem(string param, int i)
         {
-            return _repo.GetLineItem(p_lineitem);
+            return _repo.GetLineItem(param, i);
         }
 
-        public LineItem UpdateLineItem(LineItem p_lineitem)
+        public LineItem UpdateLineItem(LineItem p_lineitem, int amt)
         {
-            return _repo.UpdateLineItem(p_lineitem);
+            return _repo.UpdateLineItem(p_lineitem, amt);
+        }
+
+        public List<LineItem> GetInventory(int id){
+            return _repo.GetInventory(id);
         }
     }
 }

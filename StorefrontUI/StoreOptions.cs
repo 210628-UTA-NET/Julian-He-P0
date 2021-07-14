@@ -8,7 +8,8 @@ namespace StorefrontUI{
     public class StoreOptions : ISelectionPage{
         
         private StoreBL _store; 
-        public StoreOptions(StoreBL p_store){
+        private StorefrontDL.Entities.P0DBContext _context;
+        public StoreOptions(StoreBL p_store, StorefrontDL.Entities.P0DBContext context){
             _store = p_store;
         }
 

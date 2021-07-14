@@ -2,6 +2,7 @@ using System;
 using StorefrontModels;
 using StorefrontBL;
 using System.Collections.Generic;
+using StorefrontDL;
 
 namespace StorefrontUI
 {
@@ -9,7 +10,8 @@ namespace StorefrontUI
     public class ReplenishInventory : ISelectionPage
     {
         IStoreBL _storeBL;
-        public ReplenishInventory(IStoreBL p_store)
+        private StorefrontDL.Entities.P0DBContext _context;
+        public ReplenishInventory(IStoreBL p_store, StorefrontDL.Entities.P0DBContext context)
         {
             _storeBL = p_store;
         }
@@ -22,17 +24,28 @@ namespace StorefrontUI
             
         }
 
-        public void Replenish(Storefront store)
+        public bool Replenish(Storefront store)
         {
+            bool replenished = false;
             Console.WriteLine(store.Name + "'s inventory list:");
             Console.WriteLine("Product                     Inventory");
-            int i = 0;
-            foreach(LineItem item in store.Inventory){
-                Console.WriteLine("[" +i+"] " + item.ProductName.Name+"                      " + item.Quantity);
+            int i = 1;
+            LineItemBL lineItemBL = new LineItemBL(new LineItemRepository(new StorefrontDL.Entities.P0DBContext()));
+            List<LineItem> items = lineItemBL.GetInventory(store.ID);
+            foreach(LineItem item in items){
+                Console.WriteLine("[{0}] "+ item.ProductName.Name + "                 " + item.Quantity, i);
                 i++;
             }
-            Console.WriteLine("Which item would you like to Replenish?");
+            Console.WriteLine("Which item would you like to Replenish? or press 0 to return to exit menu");
             string choice = Console.ReadLine();
+            if(Convert.ToInt32(choice)-1 > i){
+                Console.WriteLine("Item not in inventory");
+                return replenished;
+            }
+            if (Convert.ToInt32(choice) == 0){
+                replenished = true;
+                return replenished;
+            }
             bool validamt = false;
             int finalquant = 0;
             while(!validamt){
@@ -42,15 +55,16 @@ namespace StorefrontUI
                     Console.WriteLine("Cannot add a negative value");
                 }else{
                     validamt= true;
-                    finalquant = quant;
+                    finalquant = Convert.ToInt32(quant);
                 }
             }
-            foreach(LineItem item in store.Inventory){
-                if (item.ProductName.Name == choice){
-                    item.Quantity += finalquant;
-                }
-            }
-            
+            LineItem target = items[Convert.ToInt32(choice)-1];
+            //lineItemBL.UpdateLineItem();
+        StoreBL storeBL = new StoreBL(new StoreRepository(_context));
+        storeBL.Replenish(target, finalquant);
+        replenished = true;
+
+        return replenished;
         }
 
         public PageType Selection()
@@ -60,41 +74,18 @@ namespace StorefrontUI
                 case "0":
                     Console.WriteLine("Here is a list of available stores");
                     List<Storefront> stores = _storeBL.GetAllStore();
+                    int i = 0;
                     foreach(Storefront store in stores){
-                        Console.WriteLine(store.Name);
+                        Console.WriteLine("[{0}] " + store.Name + " with address " + store.Address, i);
+                        i++;
                     }
                     Console.WriteLine("Which Store would you like to restock?");
                 String targetStore = Console.ReadLine();
-
-                List<Storefront> ReplenishingStores = new List<Storefront>();
-                foreach(Storefront store in stores){
-                    if (store.Name == targetStore){
-                        ReplenishingStores.Add(store);
-                    }
+                Storefront chosenstore = stores[Convert.ToInt32(targetStore)];
+                bool res = false;
+                while(!res){
+                res = Replenish(chosenstore);
                 }
-                Storefront chosenstore = new Storefront();
-                bool validation = true;
-                while(validation){
-                    if(ReplenishingStores.Count > 1){
-                    Console.WriteLine("Multiple Stores with this name, can only restock one at a time");
-                    Console.WriteLine("Which store would you like to chose");
-                    for(int i = 0; i< ReplenishingStores.Count;i++){
-                        Console.WriteLine("[{0}] " + ReplenishingStores[i].Name + "with address "+ ReplenishingStores[i].Address);
-                    }
-                    string choice = Console.ReadLine();
-                    if (Convert.ToInt32(choice) > (ReplenishingStores.Count-1)){
-                        Console.WriteLine("Input invalid");
-                    }
-                    else if (ReplenishingStores.Count== 0){
-                        Console.WriteLine("No store with that name found");
-                        }
-                    }
-                    else{
-                        chosenstore = ReplenishingStores[0];
-                        validation= false;
-                    }
-                }
-                Replenish(chosenstore);
                 return PageType.ReplenishInventory;
                 case "1":
                     return PageType.StoreOptions;

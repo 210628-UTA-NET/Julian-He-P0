@@ -4,14 +4,17 @@ using System.Threading;
 using System.Collections.Generic;
 using StorefrontBL;
 using System.Linq;
+using StorefrontDL;
 
 namespace StorefrontUI{
     public class OrderMaker{
         private IStoreBL _storeBL;
         private int _customernumber;
         Storefront _store;
-    public OrderMaker(IStoreBL p_storeBL, int customerID){
+        private StorefrontDL.Entities.P0DBContext _context;
+    public OrderMaker(IStoreBL p_storeBL, int customerID, StorefrontDL.Entities.P0DBContext context){
         _storeBL = p_storeBL;
+        _context = context;
         _customernumber = customerID;
     }
     public OrderMaker(Storefront p_store, int customerID){
@@ -25,29 +28,18 @@ namespace StorefrontUI{
         Storefront chosenstore;
         customerorder.TotalPrice = 0;
         customerorder.CustomerID = _customernumber;
+        List<Storefront> allstore = _storeBL.GetAllStore();
+        int n = 0;
+        foreach(Storefront store in allstore){
+            Console.WriteLine("[{0}] " + store.Name + " with address " + store.Address, n);
+            n++;
+        }
         Console.WriteLine("Please enter the Name of the store where the order was placed");
-                string location = Console.ReadLine();
-                List<Storefront> storelist = _storeBL.GetAllStore();
-                var queryRes = (from res in storelist
-                                    where res.Name == location
-                                    select res);
-                List<Storefront> reslist = new List<Storefront>();
-                foreach (var result in queryRes){
-                    reslist.Add(result);
-                }
-                if (reslist.Count > 1){
-                    Console.WriteLine("Multiple Stores with this name have been found. Which store would you like to order from?");
-                    for(int i = 0; i<reslist.Count; i++){
-                        Console.WriteLine("[{0}] " + reslist[i] + "with address " + reslist[i].Address, i);
-                    }
-                    int choice = Convert.ToInt32(Console.ReadLine());
-                    customerorder.Location = reslist[choice].ID;
-                    chosenstore = reslist[choice];
-                }
-                else{
-                    chosenstore = reslist[0];
-                    customerorder.Location = reslist[0].ID;
-                }
+        string location = Console.ReadLine();
+        Console.WriteLine("Input read");
+        chosenstore = allstore[Convert.ToInt32(location)-1];
+
+
         Console.Clear();
         Console.WriteLine("Now adding items to order");
         LineItem newItem = new LineItem();
@@ -59,7 +51,7 @@ namespace StorefrontUI{
                 }
                 Console.WriteLine("What is the Product you want to add");
 
-                ProductMaker maker = new ProductMaker();
+                ProductMaker maker = new ProductMaker(_context);
                 Product item = maker.MakeProduct();
                 newItem.ProductName = item;
                 Console.WriteLine("How many of this product do you have?");
@@ -70,10 +62,11 @@ namespace StorefrontUI{
                     Console.WriteLine("Cannot have decimals or Letters");
                 }
                 customerorder.Items.Add(newItem);
-                customerorder.TotalPrice += newItem.ProductName.Price*newItem.Quantity;
+                ProductBL productBL = new ProductBL(new ProductRepository(_context));
+                customerorder.TotalPrice += 0;
                 bool ProdInInventory = false;
-                foreach (LineItem invenItem in chosenstore.Inventory ){
-                    if ((item.Name == invenItem.ProductName.Name) && (item.Price == invenItem.ProductName.Price)){
+                foreach (LineItem invenItem in chosenstore.Inventory){
+                    if (item.ID == invenItem.ProductName.ID){
                         ProdInInventory = true;
                     }
                 }
@@ -83,6 +76,7 @@ namespace StorefrontUI{
                     ProdToAdd.ProductName = item;
                     ProdToAdd.Quantity = 0;
                     chosenstore.Inventory.Add(ProdToAdd);
+                    productBL.AddProduct(item);
                 }
                 Console.WriteLine("Would you like to add another item to the order?");
                 Console.WriteLine("[1] Yes");

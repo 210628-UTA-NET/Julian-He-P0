@@ -27,8 +27,11 @@ namespace StorefrontBL
         {
             return _repo.GetAllStores();
         }
-        public Storefront GetStorefront(Storefront p_store){
+        public Storefront GetStorefront(int p_store){
             return _repo.GetStorefront(p_store);
+        }
+        public LineItem Replenish(LineItem item, int amt){
+                return _repo.Replenish( item, amt);
         }
 
     }

@@ -19,8 +19,8 @@ namespace StorefrontBL
 
         LineItem AddLineItem(LineItem p_lineitem);
 
-        LineItem GetLineItem(LineItem p_lineitem);
+        List<LineItem> GetLineItem(string param, int i);
         
-        LineItem UpdateLineItem(LineItem p_lineitem);
+        LineItem UpdateLineItem(LineItem p_lineitem, int amt);
     }
 }

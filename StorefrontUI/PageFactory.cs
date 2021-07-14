@@ -7,8 +7,11 @@ namespace StorefrontUI
 {
     public class PageFactory : IPageFactory
     {
+        private StorefrontDL.Entities.P0DBContext context = new StorefrontDL.Entities.P0DBContext();
         public ISelectionPage GetMenu(PageType p_page)
         {
+            StoreBL storeBL = new StoreBL(new StoreRepository(context));
+            CustomerBL customerBL = new CustomerBL(new CustomerRepository(context));
             switch (p_page)
             {
                 case PageType.MainPage:
@@ -16,32 +19,31 @@ namespace StorefrontUI
                 case PageType.StorePage:
                     return new StorePage();
                 case PageType.ShowStorefrontPage:
-                    //ShowRestaurantMenu needs a RestaurantBL object in the parameter because it depends on that object to be able to run its functionality
-                    //RestaurantBL needs the Repository object in the parameter because it depends on that object to be able to run
-                    //This is call Dependency Injection
-                    return new ShowStorefrontPage(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new ShowStorefrontPage(storeBL, context);
                 case PageType.AddStorefrontPage:
-                    return new AddStorefrontPage(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new AddStorefrontPage(storeBL, context);
                // case PageType.FindStorePage:
                     //return new FindStorePage(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
                 //case PageType.FindCustomerPage:
                     // new FindCustomerPage(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
                 case PageType.CustomerPage:
-                    return new CustomerPage(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new CustomerPage();
                 case PageType.ShowCustomerPage:
-                    return new ShowCustomerPage(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new ShowCustomerPage(customerBL, context);
                 case PageType.AddCustomerPage:
-                    return new AddCustomerPage(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new AddCustomerPage(context);
                 case PageType.ReplenishInventory:
-                    return new ReplenishInventory(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new ReplenishInventory(storeBL, context);
                 case PageType.StoreOptions:
-                    return new StoreOptions(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new StoreOptions(storeBL, context);
                 case PageType.CustomerOptions:
-                    return new CustomerOptions(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new CustomerOptions(customerBL, context);
                 case PageType.StoreViewOrders:
-                    return new StoreViewOrders(new StoreBL(new StoreRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new StoreViewOrders(storeBL, context);
                 case PageType.CustomerViewOrders:
-                    return new CustomerViewOrders(new CustomerBL(new CustomerRepository(new StorefrontDL.Entities.P0DBContext())));
+                    return new CustomerViewOrders(customerBL, context);
+                case PageType.ViewInventory:
+                    return new StoreViewInventory(storeBL, context);
                 default:
                     return null;
             }

@@ -11,89 +11,65 @@ namespace StorefrontUI{
         private IStoreBL _storeBL;
         private int _customernumber;
         private Storefront _store;
-    public OrderPlacer(IStoreBL p_storeBL, Storefront p_store, int customerID){
+        private StorefrontDL.Entities.P0DBContext _context;
+    public OrderPlacer(IStoreBL p_storeBL, Storefront p_store, int customerID, StorefrontDL.Entities.P0DBContext context){
         _storeBL = p_storeBL;
         _customernumber = customerID;
         _store = p_store;
+        _context = context;
     }
     public Order PlaceOrder(){
         Console.WriteLine("This is the Order Placer");
         Order customerorder = new Order(); 
         List<LineItem> orderlist = new List<LineItem>();
-        Storefront chosenstore;
-        customerorder.CustomerID = _customernumber;
-        Console.WriteLine("Please enter the Name of the store where the order will be placed or press 0 to return to go back to the previous page");
-        string location = Console.ReadLine();
-        if (location == "0"){
-            return customerorder;
-        }
-        List<Storefront> storelist = _storeBL.GetAllStore();
-        var queryRes = (from res in storelist
-                        where res.Name == location
-                        select res);
-                
-        List<Storefront> reslist = new List<Storefront>();
-        foreach (var result in queryRes){
-            reslist.Add(result);
-            }
-        if(reslist.Count == 0){
-            Console.WriteLine("No store with this name was found");
-            Console.Clear();
-            }
-        if (reslist.Count > 1){
-            Console.WriteLine("Multiple Stores with this name have been found. Which store would you like to order from?");
-            for(int i = 0; i<reslist.Count; i++){
-                Console.WriteLine("[{0}] " + reslist[i] + "with address " + reslist[i].Address, i);
-                }
-            int choice = Convert.ToInt32(Console.ReadLine());
-            customerorder.Location = reslist[choice].ID;
-            chosenstore = reslist[choice];
-            Console.Clear();
-                }
-        else{
-            customerorder.Location = reslist[0].ID;
-            chosenstore = reslist[0];
-            }
         LineItem newItem = new LineItem();
         bool run = true;
+        OrderBL orderBL = new OrderBL(new OrderRepository(_context));
+        Console.WriteLine("gotten orders");
+        newItem.OrderID =orderBL.GetAllOrder().Count+1;
+        newItem.StoreID = _store.ID;
         while(run){
-            Console.WriteLine("What is the Product you want to add");
-            List<Storefront> stores = _storeBL.GetAllStore();
-            List<LineItem> targetinventory = chosenstore.Inventory;
-            foreach(Storefront store in stores){
-                if (store.ID == customerorder.Location){
-                    targetinventory = store.Inventory;
-                    }
-                }
-            ProductMaker maker = new ProductMaker();
-            Product item = maker.MakeProduct();
+            Console.WriteLine("Inventory of " + _store.Name);
+            List<LineItem> targetinventory = _store.Inventory;
+            int i = 0;
+            foreach(LineItem item in targetinventory){
+                Console.WriteLine("[{0}] " +item.ProductName.Name + " has quanitity "+ item.Quantity, i);
+            }
+            Console.WriteLine("What is the Product number you want to add to the Order");
             bool ItemInInventory = false;
             LineItem targetlineitem = new LineItem();
-            foreach(LineItem items in targetinventory){
-                if (items.ProductName.Name == item.Name && items.ProductName.Price == item.Price){
-                    ItemInInventory = true;
-                    targetlineitem = items;
-                }
+            while(!ItemInInventory){
+            string num = Console.ReadLine();
+            int itemnum = Convert.ToInt32(num);
+            try{
+            targetlineitem = targetinventory[itemnum];
+            ItemInInventory = true;
             }
-            if(ItemInInventory == false){
-                Console.WriteLine("Item is not in store inventory cannot be added to order");
-            }
-            else{
-                newItem.ProductName = item;
-                bool quantityValid = false;
-                while(quantityValid)
-                Console.WriteLine("How many of this product do you have? Please use numbers only");
+            catch{
+                Console.WriteLine("Item number not found");
+            }}
+            newItem.ProductName = targetlineitem.ProductName;
+            bool quantityValid = false;
+            while(!quantityValid){
+                Console.WriteLine("How many of this product do you have? Please use whole numbers only");
+                string num2 = Console.ReadLine();
                 try{
-                    newItem.Quantity = Convert.ToInt32(Console.ReadLine());
+                    
+                    newItem.Quantity = Convert.ToInt32(num2);
                     }
                 catch{
-                    Console.WriteLine("Cannot have decimals or Letters");
+                    Console.WriteLine("Cannot have Letters in amount");
                     }
                 if (newItem.Quantity > targetlineitem.Quantity){
                     Console.WriteLine("Quantity exceeds avaiable inventory");
                 }
-                else{};
+                else{
+                    targetlineitem.Quantity -= newItem.Quantity;
+                    quantityValid = true;
+                };}
+                
                 customerorder.Items.Add(newItem);
+                customerorder.TotalPrice += newItem.Quantity+newItem.ProductName.Price;
                 Console.WriteLine("Would you like to add another item to the order?");
                 Console.WriteLine("[1] Yes");
                 Console.WriteLine("[2] No");
@@ -109,10 +85,12 @@ namespace StorefrontUI{
                     Console.Clear();
                     run = false;
                     }
-                }
-            }
-        return customerorder;
 
+            }
+        customerorder.CustomerID = _customernumber;
+        customerorder.Location = _store.ID;
+        orderBL.PlaceOrder(customerorder);
+        return customerorder;
         }
     }
 }

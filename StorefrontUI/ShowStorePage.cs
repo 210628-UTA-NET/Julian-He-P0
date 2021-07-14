@@ -8,7 +8,8 @@ namespace StorefrontUI
     public class ShowStorefrontPage : ISelectionPage
     {
         private IStoreBL _storeBL;
-        public ShowStorefrontPage(IStoreBL p_store)
+        private StorefrontDL.Entities.P0DBContext _context;
+        public ShowStorefrontPage(IStoreBL p_store, StorefrontDL.Entities.P0DBContext context)
         {
             _storeBL = p_store;
         }

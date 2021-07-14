@@ -6,8 +6,10 @@ namespace StorefrontDL{
 
         ///returns all customers in repo
         List<LineItem> GetAllLineItems();
-        LineItem GetLineItem(LineItem lineitem);
+        List<LineItem> GetLineItem(string param, int i);
         LineItem AddLineItem(LineItem lineitem);
-        LineItem UpdateLineItem(LineItem lineitem);
+        LineItem UpdateLineItem(LineItem lineitem, int amt);
+
+        List<LineItem> GetInventory(int i);
     }
 }

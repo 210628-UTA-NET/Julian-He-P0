@@ -1,14 +1,17 @@
 using System;
 using StorefrontModels;
 using System.Threading;
+using StorefrontDL;
+using StorefrontBL;
+using StorefrontDL;
 
 namespace StorefrontUI{
-
+    
     public class ProductMaker{
 
-    
-    public ProductMaker(){
-        
+    private StorefrontDL.Entities.P0DBContext _context;
+    public ProductMaker(StorefrontDL.Entities.P0DBContext context){
+        _context = context;
         }
     public Product MakeProduct(){
             Product storeProduct = new Product();
@@ -19,10 +22,12 @@ namespace StorefrontUI{
                 Console.WriteLine("[2] Price: " + Convert.ToString(storeProduct.Price));
                 Console.WriteLine("[3] Description: " + storeProduct.Desc);
                 Console.WriteLine("[4] Category: " + storeProduct.Category);
+                Console.WriteLine("[0] Add Item");
                 
                 string input = Console.ReadLine();
                 if(input == "1"){
                     try{
+                        Console.WriteLine("What is the Product Name?");
                         storeProduct.Name = Console.ReadLine();
                         }
                     catch{
@@ -32,6 +37,7 @@ namespace StorefrontUI{
                     }
                 if(input =="2"){
                     try{
+                        Console.WriteLine("What is the price of the product?");
                         storeProduct.Price = Convert.ToDouble(Console.ReadLine());
                         }
                     catch{
@@ -56,6 +62,8 @@ namespace StorefrontUI{
                         }
                     }
                 }
+            ProductBL productBL = new ProductBL(new ProductRepository(new StorefrontDL.Entities.P0DBContext()));
+            productBL.AddProduct(storeProduct);
             return storeProduct;
         }
     }

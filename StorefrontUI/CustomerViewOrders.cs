@@ -1,4 +1,5 @@
 using StorefrontBL;
+using StorefrontDL;
 using StorefrontModels;
 using System.Collections.Generic;
 using System;
@@ -7,9 +8,10 @@ namespace StorefrontUI{
     
     public class CustomerViewOrders : ISelectionPage{
         private ICustomerBL _CustomerBL;
-
-        public CustomerViewOrders(ICustomerBL p_CustomerBL){
+private StorefrontDL.Entities.P0DBContext _context;
+        public CustomerViewOrders(ICustomerBL p_CustomerBL, StorefrontDL.Entities.P0DBContext context){
                 _CustomerBL = p_CustomerBL;
+                _context = context;
             }
 
         public void Page()
@@ -25,7 +27,8 @@ namespace StorefrontUI{
             Console.WriteLine("Which Customer would you like to choose?");
             string choice = Console.ReadLine();
             Customertosee = Customers[Convert.ToInt32(choice)];
-            List<Order> orderlist = Customertosee.Orders;
+            OrderBL orders = new OrderBL(new OrderRepository(new StorefrontDL.Entities.P0DBContext()));
+            List<Order> orderlist = orders.GetCustomerOrder(Customertosee.ID);
             foreach (Order order in orderlist){
                 Console.WriteLine(order.OrderID + "  " + order.TotalPrice);
             }

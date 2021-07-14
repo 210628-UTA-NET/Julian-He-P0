@@ -37,7 +37,7 @@ namespace StorefrontModels
             get{
                 return _orders;
             }
-             private set{
+             set{
                 _orders = value;
             } 
         }

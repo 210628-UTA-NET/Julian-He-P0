@@ -7,9 +7,7 @@ using StorefrontBL;
 namespace StorefrontUI{
     
     public class CustomerPage : ISelectionPage{
-        ICustomerBL _customerBL;
-        public CustomerPage(ICustomerBL p_customer){
-            _customerBL = p_customer;
+        public CustomerPage(){
         }
 
         public PageType Selection()
