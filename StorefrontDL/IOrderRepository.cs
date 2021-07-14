@@ -10,6 +10,6 @@ namespace StorefrontDL{
         List<Order> GetStoreOrder(int ints);
         List<Order> GetCustomerOrder(int ints);
 
-        void PlaceOrder(Order order);
+        void PlaceOrder(Order order, List<LineItem> listItems);
     }
 }

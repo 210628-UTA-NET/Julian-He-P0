@@ -29,8 +29,10 @@ private StorefrontDL.Entities.P0DBContext _context;
             Customertosee = Customers[Convert.ToInt32(choice)];
             OrderBL orders = new OrderBL(new OrderRepository(new StorefrontDL.Entities.P0DBContext()));
             List<Order> orderlist = orders.GetCustomerOrder(Customertosee.ID);
+            Console.WriteLine("Order ID Number     Total Cost");
             foreach (Order order in orderlist){
-                Console.WriteLine(order.OrderID + "  " + order.TotalPrice);
+
+                Console.WriteLine(order.OrderID + "                   " + order.TotalPrice);
             }
             Console.WriteLine("[0] Return to Customer Options");
             Console.WriteLine("[1] View another Customer's orders");

@@ -25,25 +25,30 @@ namespace StorefrontUI{
         LineItem newItem = new LineItem();
         bool run = true;
         OrderBL orderBL = new OrderBL(new OrderRepository(_context));
+        Console.WriteLine("getting orders");
+        List<Order> orders = new List<Order>();
         Console.WriteLine("gotten orders");
-        newItem.OrderID =orderBL.GetAllOrder().Count+1;
         newItem.StoreID = _store.ID;
+        List<LineItem> InventoryItemstoUpdate = new List<LineItem>();
         while(run){
             Console.WriteLine("Inventory of " + _store.Name);
             List<LineItem> targetinventory = _store.Inventory;
             int i = 0;
             foreach(LineItem item in targetinventory){
                 Console.WriteLine("[{0}] " +item.ProductName.Name + " has quanitity "+ item.Quantity, i);
+                i++;
             }
             Console.WriteLine("What is the Product number you want to add to the Order");
             bool ItemInInventory = false;
             LineItem targetlineitem = new LineItem();
+            
             while(!ItemInInventory){
             string num = Console.ReadLine();
             int itemnum = Convert.ToInt32(num);
             try{
             targetlineitem = targetinventory[itemnum];
             ItemInInventory = true;
+            InventoryItemstoUpdate.Add(targetlineitem);
             }
             catch{
                 Console.WriteLine("Item number not found");
@@ -64,10 +69,8 @@ namespace StorefrontUI{
                     Console.WriteLine("Quantity exceeds avaiable inventory");
                 }
                 else{
-                    targetlineitem.Quantity -= newItem.Quantity;
                     quantityValid = true;
                 };}
-                
                 customerorder.Items.Add(newItem);
                 customerorder.TotalPrice += newItem.Quantity+newItem.ProductName.Price;
                 Console.WriteLine("Would you like to add another item to the order?");
@@ -89,7 +92,7 @@ namespace StorefrontUI{
             }
         customerorder.CustomerID = _customernumber;
         customerorder.Location = _store.ID;
-        orderBL.PlaceOrder(customerorder);
+        orderBL.PlaceOrder(customerorder, InventoryItemstoUpdate);
         return customerorder;
         }
     }

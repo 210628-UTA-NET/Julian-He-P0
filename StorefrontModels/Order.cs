@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace StorefrontModels
 {
     public class Order{
-        private List<LineItem> _items;
+        private List<LineItem> _items = new List<LineItem>();
         private int _orderID;
         private int _location;
         private double _totalPrice;

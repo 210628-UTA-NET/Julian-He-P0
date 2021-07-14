@@ -11,10 +11,11 @@ namespace StorefrontUI{
         private Customer _customer;
         private IStoreBL _storeBL;
         private StorefrontDL.Entities.P0DBContext _context;
-        public MakeOrder(Customer p_customer, ICustomerBL p_customerBL, StoreBL p_store){
+        public MakeOrder(Customer p_customer, ICustomerBL p_customerBL, StoreBL p_store, StorefrontDL.Entities.P0DBContext context){
             _storeBL = p_store;
             _customer = p_customer;
             _customerBL = p_customerBL;
+            _context = context;
 
 
         }
@@ -58,8 +59,6 @@ namespace StorefrontUI{
                     Order order = NewOrder.PlaceOrder();
                     order.CustomerID = _customer.ID;
                     order.Location = selected.ID;
-                    
-                    orderBL.AddOrder(order);
                     return PageType.CustomerOptions;
             }
         }

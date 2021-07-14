@@ -23,6 +23,6 @@ namespace StorefrontBL
 
         List<Order> GetCustomerOrder(int p_order);
 
-        void PlaceOrder(Order order);
+        void PlaceOrder(Order order, List<LineItem> lineItems);
     }
 }

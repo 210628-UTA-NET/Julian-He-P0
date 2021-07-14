@@ -35,8 +35,8 @@ namespace StorefrontBL
         public List<Order> GetCustomerOrder(int p_order){
             return _repo.GetCustomerOrder(p_order);
         }
-        public void PlaceOrder(Order order){
-            _repo.PlaceOrder(order);
+        public void PlaceOrder(Order order, List<LineItem> listItems){
+            _repo.PlaceOrder(order, listItems);
         }
     }
 }

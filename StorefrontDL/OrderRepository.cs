@@ -35,7 +35,6 @@ namespace StorefrontDL{
 
         public List<Models.Order> GetAllOrders()
         {
-            
             var result = _context.Orders.Include(o => o.LineItems).ToList();
             List<Models.Order> list = new List<Models.Order>();
             foreach (var res in result){
@@ -74,31 +73,20 @@ namespace StorefrontDL{
             }
             return ordered;
         }
-        public void PlaceOrder(Models.Order order){
+        public void PlaceOrder(Models.Order order, List<Models.LineItem> listItems){
              _context.Orders.Add(new Entity.Order(){
                                         Location = order.Location,
                                         Totalprice = order.TotalPrice,
                                         CustomerId = order.CustomerID
+                                        
             });
-            Entities.Product product = new Entity.Product();
             LineItemRepository linerepo = new LineItemRepository(_context);
-            List<Models.LineItem> lines = linerepo.GetInventory(order.Location);
-            foreach(Models.LineItem line in order.Items){
-                _context.LineItems.Add(new Entity.LineItem(){
-                                            Quantity = line.Quantity,
-                                            OrderId = line.OrderID,
-                                            StoreId = line.StoreID,
-                                            ProdId = line.ProductName.ID
-                });
-                foreach(Models.LineItem line2 in lines){
-                    if (line2.ProductName.ID == line.ProductName.ID){
-                        line2.Quantity -= line.Quantity;
-                    }
+            foreach(Models.LineItem line in listItems){
+                foreach(Models.LineItem item in order.Items){
+                    if(item.ProductName.ID == line.ProductName.ID){
+                    linerepo.UpdateLineItem(line , -item.Quantity);}}
+
             }
-            }
-            
-            
-            
             _context.SaveChanges();
         }
     }

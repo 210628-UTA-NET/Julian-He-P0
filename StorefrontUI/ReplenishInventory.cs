@@ -14,6 +14,7 @@ namespace StorefrontUI
         public ReplenishInventory(IStoreBL p_store, StorefrontDL.Entities.P0DBContext context)
         {
             _storeBL = p_store;
+            _context = context;
         }
 
         public void Page()

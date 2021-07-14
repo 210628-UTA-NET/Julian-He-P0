@@ -62,7 +62,7 @@ namespace StorefrontUI{
                         finalcustomer = customers[CustomerNum];
                         customerselected= true;
                     }}
-                    MakeOrder PlaceOrder = new MakeOrder(finalcustomer, _customerBL, new StoreBL(new StoreRepository(_context)));
+                    MakeOrder PlaceOrder = new MakeOrder(finalcustomer, _customerBL, new StoreBL(new StoreRepository(_context)), _context);
                     PlaceOrder.Page();
                     PageType page = PlaceOrder.Selection();
                     return page;
